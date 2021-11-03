@@ -21,7 +21,7 @@ public class Member
     @Embedded
     private Address address;
 
-    @OneToMany(mappedby = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Order> oreders = new ArrayList<>();
     
 }
