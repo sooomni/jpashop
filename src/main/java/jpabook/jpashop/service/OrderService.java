@@ -1,11 +1,21 @@
 package jpabook.jpashop.service;
 
+import jpabook.jpashop.domain.Delivery;
+import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.domain.Order;
+import jpabook.jpashop.domain.OrderItem;
+import jpabook.jpashop.domain.item.Item;
+import jpabook.jpashop.repository.MemberRepository;
+import jpabook.jpashop.repository.OrderRepository;
+import jpabook.jpashop.repository.ItemRepository;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.transaction.Transactional;
 
 @Service
-@RequiredArgsConstructor 
+@RequiredArgsConstructor
 public class OrderService {
 	
 	private final OrderRepository orderRepository;
@@ -16,7 +26,8 @@ public class OrderService {
 	@Transactional
 	public Long order(Long memberId, Long itemId, int count){
 		//엔티티 조회
-		Member member = memeberRepository.findOne(memberId);
+		MemberRepository memeberRepository;
+		Member member = memberRepository.findOne(memberId);
 		Item item = itemRepository.findOne(itemId);
 
 		//배송정보 생성
@@ -26,7 +37,7 @@ public class OrderService {
 		OrderItem orderItem = OrderItem.createOrderItem(item,item.getPrice(),count);
 
 		//주문 생성
-		Order.createOrder(member, delivery, orderItem);
+		Order order = Order.createOrder(member, delivery, orderItem);
 
 		//주문 저장
 		orderRepository.save(order); //caseCase 조건 때문에 요 시점에 delivery, orderItem도 함께 persist 됨

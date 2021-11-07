@@ -1,12 +1,16 @@
 package jpabook.jpashop.service;
 
+import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 //final 있는 필드만 가지고 생성자 생성
-@RequiredArgsConstructor 
+@RequiredArgsConstructor
 public class MemberService {
 
 	private final MemberRepository memberRepository;
@@ -29,14 +33,12 @@ public class MemberService {
 	}
 
 	//회원 전체 조회
-	@Transactional(readOnly = true) 
 	public List<Member> findMembers(){
 		return memberRepository.findAll();
 	}
 	
-	//회원 단권 조회 
-	@Transactional(readOnly = true)
-	public List<Member> findOne(Long id){
+	//회원 단권 조회
+	public Member findOne(Long id){
 		return memberRepository.findOne(id);
 	}
 
