@@ -31,8 +31,8 @@ public class OrderController {
 
 	@PostMapping("/order")
 	public String order(@RequestParam("memberId") Long memberId, 
-						@RequestParam("itemId") Long itemId,
-						@RequestParam("count") int count){
+		@RequestParam("itemId") Long itemId,
+		@RequestParam("count") int count){
 		orderService.order(memberId, itemId, count);
 		return "redirect:/orders";
 	}
