@@ -2,9 +2,8 @@ package jpabook.jpashop.controller;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.constrains.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter

@@ -1,7 +1,9 @@
 package jpabook.jpashop.domain;
 
 import jpabook.jpashop.domain.item.Item;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@NoArgumentConstructor(access = AccessLevel.protected)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem{
 
 	@Id
@@ -47,9 +49,7 @@ public class OrderItem{
 
 	//==조회 로직==//
 	/** 주문 상품 전체 가격 조회 */
-	public int getTotalPrice(){
-		return orderItems.stream()
-						 .mapToInt(OrderItem::getTotalPrice)
-						 .sum();
+	public int getTotalPrice() {
+		return getOrderPrice() * getCount();
 	}
 }

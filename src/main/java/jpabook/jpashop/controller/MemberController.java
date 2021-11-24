@@ -6,8 +6,10 @@ import jpabook.jpashop.service.MemberService;
 import lombok.RequiredArgsConstructor; 
 import org.springframework.stereotype.Controller; 
 import org.springframework.ui.Model; 
-import org.springframework.validation.BindingResult; 
-import org.springframework.web.bind.annotation.RequestMapping; 
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import javax.validation.Valid; 
 import java.util.List;
@@ -21,21 +23,21 @@ public class MemberController {
 	@GetMapping("/members/new")
 	public String createForm(Model model){
 		model.addAttribute("memberForm",new MemberForm());
-		return "members/createMemberForm"
+		return "members/createMemberForm";
 	}
 
 
 	@PostMapping("/members/new")
 	public String create(@Valid MemberForm form, BindingResult result){
-		
-		if(result.hasError()){
+
+		if(result.hasErrors()){
 			return "member/createMemberForm";
 		}
 
-		Address address = new Address(form.getCity(),form.getStree(),form.getZipcode())
+		Address address = new Address(form.getCity(),form.getStreet(),form.getZipcode());
 		
-		Memeber member = new Member();
-		member.setName(fomr.getName());
+		Member member = new Member();
+		member.setName(form.getName());
 		member.setAddress(address);
 
 		memberService.join(member);
@@ -45,7 +47,7 @@ public class MemberController {
 	@GetMapping("/members")
 	public String list(Model model){
 		List<Member> members = memberService.findMembers();
-		model.addAttribute("members", member);
+		model.addAttribute("members", members);
 		return "members/memberList";
 	}
 
