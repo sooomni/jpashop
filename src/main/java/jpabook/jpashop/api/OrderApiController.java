@@ -77,8 +77,13 @@ public class OrderApiController {
     }
 
     @GetMapping("/api/v3/orders")
-    public List<OrderDto> ordersV3() {
-        return null;
+    public List<OrderDto> ordefinrsV3() {
+        List<Order> orders = orderRepository.findAllWithItem();
+        List<OrderDto> result = orders.stream()
+                .map(o -> new OrderDto(o))
+                .collect(Collectors.toList());
+
+        return result;
     }
     @GetMapping("/api/v4/orders")
     public List<OrderDto> ordersV4() {
